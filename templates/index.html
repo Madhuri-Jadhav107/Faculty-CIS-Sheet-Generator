@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title> CIS Sheet Generator</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav style="
+        background-color: #3270ad;
+        padding: 12px 0;
+        display: flex;
+        justify-content: center;
+        gap: 40px;
+        width: 100%;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+    ">
+        
+        <a href="/" style="color: white; text-decoration: none; font-weight: bold;">Home</a>
+        <!-- <a href="/" style="color: white; text-decoration: none; font-weight: bold;">Report Generator</a> -->
+        <a href="{{ url_for('about') }}" style="color: white; text-decoration: none; font-weight: bold;">About Us</a>
+    </nav>
+
+    <div class="container">
+        <h2 class="title">CIS Sheet Generator</h2>
+
+        <form id="upload-form" method="POST" enctype="multipart/form-data">
+            <label class="file-label" for="file-input">Upload Excel File</label>
+            <input type="file" id="file-input" name="file" required>
+            <button type="submit">Generate Report</button>
+        </form>
+
+        <div class="progress">
+            <div id="log">Waiting for file upload...</div>
+        </div>
+
+        <div id="download-link" style="display:none;">
+            <a href="#" id="report-link" download>Download Report</a>
+        </div>
+
+        <!-- Sample Downloads -->
+        <div class="sample-buttons" style="margin-top: 20px; display: flex; justify-content: center; gap: 20px;">
+            <a href="{{ url_for('static', filename='sample attainment file.xlsx') }}" download style="padding: 10px 20px; background-color: #28a745; color: white; text-decoration: none; border-radius: 5px;">Download Sample Excel</a>
+            <a href="{{ url_for('static', filename='sample_cis_report.docx') }}" download style="padding: 10px 20px; background-color: #28a745; color: white; text-decoration: none; border-radius: 5px;">Download Sample Word</a>
+        </div>
+    </div>
+
+    <script>
+        const form = document.getElementById("upload-form");
+        const log = document.getElementById("log");
+        const download = document.getElementById("download-link");
+        const reportLink = document.getElementById("report-link");
+
+        form.onsubmit = async function(e) {
+            e.preventDefault();
+            log.textContent = "Uploading and processing file...";
+            download.style.display = "none";
+
+            try {
+                const formData = new FormData(form);
+                const response = await fetch("/upload", {
+                    method: "POST",
+                    body: formData,
+                });
+
+                const result = await response.json();
+                if (result.status === "success") {
+                    log.textContent = "Report generated successfully!";
+                    reportLink.href = `/download/${result.filename}`;
+                    download.style.display = "block";
+                } else {
+                    log.textContent = "Error: " + result.message;
+                }
+            } catch (err) {
+                log.textContent = "Unexpected error occurred.";
+            }
+        };
+    </script>
+</body>
+</html>

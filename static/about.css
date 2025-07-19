@@ -1,0 +1,165 @@
+/* body {
+    background-color: white;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    color: #333;
+}
+
+header {
+    text-align: center;
+    padding: 40px 30px 20px;
+    background-color: #f9f9f9;
+    border-bottom: 2px solid #e0e0e0;
+}
+
+header h1 {
+    margin-bottom: 10px;
+    font-size: 2.5em;
+    color: #2c3e50;
+}
+
+header p {
+    max-width: 800px;
+    margin: 0 auto;
+    font-size: 1.1em;
+    line-height: 1.6;
+}
+
+.team-section {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 40px 20px;
+    gap: 25px;
+}
+
+.member-card {
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+    padding: 20px;
+    width: 280px;
+    text-align: center;
+    transition: transform 0.2s;
+}
+
+.member-card:hover {
+    transform: translateY(-5px);
+}
+
+.member-card h2 {
+    margin-top: 15px;
+    font-size: 1.4em;
+    color: #2c3e50;
+}
+
+.member-card p {
+    font-size: 0.95em;
+    line-height: 1.5;
+    margin: 10px 0 0;
+}
+
+.member-card img {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 3px solid #ccc;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.guide {
+    background-color: #eef8ff;
+    border-color: #b0d4f1;
+} */
+
+
+body {
+    background-color: #f0f4f8;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    color: #333;
+}
+
+header {
+    text-align: center;
+    padding: 40px 30px 20px;
+    background: linear-gradient(to right, #dff1ff, #a0bfd5);
+    border-bottom: 2px solid #bcdffb;
+}
+
+header h1 {
+    margin-bottom: 15px;
+    font-size: 2.8em;
+    color: #1d3557;
+}
+
+.project-description {
+    background-color: #ffffff;
+    padding: 20px;
+    margin: 0 auto;
+    max-width: 800px;
+    border-radius: 10px;
+    border: 1px solid #d0e7ff;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+.project-description p {
+    font-size: 1.1em;
+    line-height: 1.6;
+    color: #2c3e50;
+}
+
+.team-section {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 40px 20px;
+    gap: 30px;
+}
+
+.member-card {
+    background-color: #ffffff;
+    border: 1px solid #d6e6f2;
+    border-radius: 16px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08);
+    padding: 15px;
+    width: 280px;
+    text-align: center;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.member-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.20);
+}
+
+.member-card h2 {
+    margin-top: 18px;
+    font-size: 1.5em;
+    color: #1d3557;
+}
+
+.member-card p {
+    font-size: 0.95em;
+    line-height: 1.5;
+    margin: 10px 0 0;
+    color: #383535;
+}
+
+.member-card img {
+    width: 160px;
+    height: 160px;
+    object-fit: cover;
+    /* border-radius: 10%; */
+    border: 3px solid #6e94ce;
+    box-shadow: 0 3px 7px rgba(0, 0, 0, 0.1);
+}
+
+.guide {
+    background-color: #e3f3ff;
+    border-color: #8cc4ec;
+}

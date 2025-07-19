@@ -1,0 +1,135 @@
+/* General Styles */
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    /* background: url("/static/images/clg.jpg") no-repeat center center fixed; */
+    color: #333;
+    
+}
+body::before {
+    content: ""; /* Required for pseudo-element */
+    position: absolute; /* Position it on top of the body */
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url("/static/images/clg.jpg") no-repeat center center fixed;
+    background-size: cover;
+    opacity: 0.7; /* Change this value for more or less opacity */
+    z-index: -1; /* Ensure the background stays behind other content */
+}
+
+/* Navbar Styling */
+nav {
+    background-color: #003366;
+    padding: 14px 0;
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    position: sticky;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 16px;
+    transition: color 0.3s ease;
+}
+
+nav a:hover {
+    color: #ffcc00;
+}
+
+/* Container */
+/* .container {
+    max-width: 700px;
+    margin: 40px auto;
+    padding: 20px;
+    text-align: center;
+} */
+
+.container {
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 16px;
+    padding: 40px 50px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+    max-width: 500px;
+    width: 100%;
+    margin-left: 340px;
+    margin-top: 100px;
+    text-align: center;
+    animation: popIn 0.8s ease-out;
+    transition: box-shadow 0.3s ease;
+}
+.container:hover {
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.18);
+}
+/* Title */
+.title {
+    font-size: 28px;
+    margin-bottom: 30px;
+    color: #003366;
+}
+
+/* Form Styles */
+#upload-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+}
+
+.file-label {
+    font-weight: bold;
+    background-color: #003366;
+    color: white;
+    padding: 10px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+#file-input {
+    display: none;
+}
+
+button[type="submit"] {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+button[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+/* Progress Section */
+.progress {
+    margin-top: 20px;
+    font-weight: bold;
+}
+
+/* Download Link */
+#download-link a {
+    display: inline-block;
+    margin-top: 15px;
+    padding: 10px 20px;
+    background-color: #28a745;
+    color: white;
+    text-decoration: none;
+    border-radius: 6px;
+    font-weight: bold;
+}
+
+/* Sample Buttons */
+.sample-buttons a:hover {
+    background-color: #218838;
+}
