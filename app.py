@@ -21,6 +21,13 @@ def about():
     return render_template('about.html')
 
 
+def get_sheet_by_partial_name(workbook, partial_name):
+    """Finds the first sheet that partially matches the given name."""
+    for sheet_name in workbook.sheetnames:
+        if partial_name.lower() in sheet_name.lower():
+            return workbook[sheet_name]
+    raise ValueError(f"No sheet found matching: {partial_name}")
+
 
 def extract_co_mapping(xls, sheet_name, prefix):
     """Extract only the CO-PO or CO-PSO mapping table (stop at PO Attainment)."""
@@ -469,7 +476,7 @@ def create_word_report(co_po_map, po_att_map, co_pso_map, excel_file, output_pat
     t1 = doc.add_table(rows=rows, cols=cols, style="Table Grid")
 
     # Row 0: "COs" + merged "Program outcomes"
-    co_cell = t1.cell(0, 0).merge(t1.cell(1, 0))  # ✅ Merge first column's top 2 rows
+    co_cell = t1.cell(0, 0).merge(t1.cell(1, 0))  # Merge first column's top 2 rows
     co_cell.text = "COs"
     co_cell.paragraphs[0].runs[0].bold = True
     co_cell.paragraphs[0].alignment = WD_PARAGRAPH_ALIGNMENT.CENTER
@@ -667,7 +674,9 @@ def create_word_report(co_po_map, po_att_map, co_pso_map, excel_file, output_pat
     internal_target_table.rows[1].cells[1].text = '60%'
        
     # === External Assessment ===
-    sheet_external = wb['University TH Marks']
+    # sheet_external = wb['University TH Marks']
+    sheet_external = get_sheet_by_partial_name(wb, "University TH Marks")
+
     external_scores = []
 
     for row in sheet_external.iter_rows(values_only=True):
@@ -703,7 +712,9 @@ def create_word_report(co_po_map, po_att_map, co_pso_map, excel_file, output_pat
  
 
      # Internal Assessment
-    sheet_ia = wb['Internal Assessment marks']
+    # sheet_ia = wb['Internal Assessment marks']
+    sheet_ia = get_sheet_by_partial_name(wb, "Internal Assessment marks")
+
     internal_scores = []
     for row in sheet_ia.iter_rows(values_only=True):
         for cell in row:
@@ -728,7 +739,9 @@ def create_word_report(co_po_map, po_att_map, co_pso_map, excel_file, output_pat
         table_int.cell(1, i).text = f"{internal_scores[i] * 100:.2f}"
 
     # Indirect Assessment
-    sheet_exit = wb['Course Exit survey']
+    # sheet_exit = wb['Course Exit survey']
+    sheet_exit = get_sheet_by_partial_name(wb, "Course Exit survey")
+
     exit_scores = []
     for row in sheet_exit.iter_rows(values_only=True):
         if row and any("Attainment level in percentage" in str(cell) for cell in row):
@@ -798,22 +811,22 @@ def create_word_report(co_po_map, po_att_map, co_pso_map, excel_file, output_pat
     table_int2.cell(2, 0).text = "Average"
     table_int2.cell(2, 1).text = f"{internal_attainment}"
 
-    # # Final Attainment Calculation
-    # university_attainment = external_attainment or 3
-    # internal_attainment = internal_attainment or 2
-    # final_attainment = 0.8 * university_attainment + 0.2 * internal_attainment
+    # Final Attainment Calculation
+    university_attainment = external_attainment
+    internal_attainment = internal_attainment
+    final_attainment = 0.8 * university_attainment + 0.2 * internal_attainment
 
-    # # doc.add_paragraph("\nFinal CO Attainment Calculation:")
+    # doc.add_paragraph("\nFinal CO Attainment Calculation:")
     # heading=doc.add_paragraph('Final CO Attainment Calculation:', style='Heading 2')
     # # Set heading font color to black
     # run = heading.runs[0]
     # run.font.color.rgb = RGBColor(0, 0, 0)
 
-    # doc.add_paragraph("Direct CO attainment is computed as:")
-    # doc.add_paragraph("= 0.8 × CO attainment level in university examination")
-    # doc.add_paragraph("+ 0.2 × CO attainment level in internal assessment")
-    # doc.add_paragraph(f"= 0.8 × {university_attainment} + 0.2 × {internal_attainment}")
-    # doc.add_paragraph(f"= {final_attainment:.2f}")
+    doc.add_paragraph("Direct CO attainment is computed as:")
+    doc.add_paragraph("= 0.8 × CO attainment level in university examination")
+    doc.add_paragraph("+ 0.2 × CO attainment level in internal assessment")
+    doc.add_paragraph(f"= 0.8 × {university_attainment} + 0.2 × {internal_attainment}")
+    doc.add_paragraph(f"= {final_attainment:.2f}")
 
     # === CO Attainment by Course Exit Survey (based on Final Attainment Level) ===
     exit_survey_sheet = wb['Course Exit survey']
@@ -847,16 +860,14 @@ def create_word_report(co_po_map, po_att_map, co_pso_map, excel_file, output_pat
 
 
     # # === Final CO Attainment Calculation ===
-    # # Replace these with actual calculated values if available
-    # co_attainment_direct = 2.8
-    # co_attainment_indirect = 3.0
+    # Replace these with actual calculated values if available
+    
 
-    # final_co_attainment = 0.9 * co_attainment_direct + 0.1 * co_attainment_indirect
-
-    # doc.add_paragraph("\nOverall CO attainment is then computed as:")
-    # doc.add_paragraph("= 0.9 × CO attainment level in Direct CO attainment")
-    # doc.add_paragraph("+ 0.1 × CO attainment level in Indirect CO attainment")
-    # doc.add_paragraph(f"\nFinal CO Attainment = {final_co_attainment:.2f}")
+    final_co_attainment = 0.9 * final_attainment + 0.1 * attainment_value
+    doc.add_paragraph("\nOverall CO attainment is then computed as:")
+    doc.add_paragraph("= 0.9 × CO attainment level in Direct CO attainment")
+    doc.add_paragraph("+ 0.1 × CO attainment level in Indirect CO attainment")
+    doc.add_paragraph(f"\nFinal CO Attainment = {final_co_attainment:.2f}")
 
 
     # === Result of Evaluation of PO's Table ===
