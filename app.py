@@ -904,7 +904,10 @@ def create_word_report(co_po_map, po_att_map, co_pso_map, excel_file, output_pat
     try:
         pso_eval = extract_pso_evaluation_table(xls)
         if pso_eval:
-            doc.add_paragraph("Result of Evaluation of PSO's Table", style='Heading 1')
+           heading= doc.add_paragraph("Result of Evaluation of PSO's Table", style='Heading 1')
+             # Set heading font color to black
+            run = heading.runs[0]
+            run.font.color.rgb = RGBColor(0, 0, 0)
             header, data = pso_eval
             if len(header) > 0 and len(data) > 0:
                 table = doc.add_table(rows=2, cols=len(header), style="Table Grid")
